@@ -11,3 +11,7 @@ function _bulkr_download(data) {
    		alert("Error processing bulkr request:\\n "+data.error); 
    } 
 }
+
+function _bulk_getLink() {
+	return document.getElementById("txtBulkZipLink").value;
+}
