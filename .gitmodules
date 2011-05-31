@@ -1,0 +1,3 @@
+[submodule "server/lib/node-archive"]
+	path = server/lib/node-archive
+	url = https://github.com/pquerna/node-archive.git
