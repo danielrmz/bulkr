@@ -54,7 +54,14 @@ app.get('/', function(req, res) {
             
             if(completed == photos.length) {
                 var zip   = exec('zip -9 ' + zip_savepath + id + ' ' + savepath + "/*", function(aError, stdout, stderr) { 
+                	// Do some cleaning...
+                	for(var i = 0; i < photos.length; i++) {
+	        			var local_file  = savepath+"/"+(i+1)+".jpg";
+	                	fs.unlink(local_file);
+	                }
                 	fs.unlink(savepath);
+                	
+                	// Send error or successful id of the zip.
                     if(aError !== null) {
                 		error = aError; 
                 		res.send("_bulkr_download("+JSON.stringify({"id":"", "error": error})+")");
