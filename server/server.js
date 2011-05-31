@@ -8,8 +8,10 @@ var app = express.createServer();
 app.get('/channel.js', function(req, res) {
         res.header('Content-Type', 'text/javascript');
         res.send('function _bulkr_download(data) { '+
-                'if(data.error !== false) { ' +
-                	          ' alert(data.id);' +
+                'if(data.error == false) { ' +
+                	          'var txtLink = document.getElementById("txtBulkZipLink");' +
+                	          'txtLink.value = txtLink.getAttribute("endpoint") + "/set/" + data.id;' +
+                	          'document.getElementById("bulkTip").style.display = "block"; ' +
                 '} else { alert("Error processing bulkr request:\\n "+data.error); } }');
 });
      
@@ -34,7 +36,8 @@ app.get('/', function(req, res) {
             
             if(completed == photos.length) {
                 var zip   = exec('zip -9 ' + zip_savepath + id + ' ' + savepath + "/*", function(aError, stdout, stderr) { 
-                	if(aError !== null) {
+                	fs.unlink(savepath);
+                    if(aError !== null) {
                 		error = aError; 
                 		res.send("_bulkr_download("+JSON.stringify({"id":"", "error": error})+")");
                 	} else {
