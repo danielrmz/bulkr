@@ -6,17 +6,14 @@ var path    = require('path');
 
 var app = express.createServer();
 var filePath = "./files/";
-	
-app.get('/channel.js', function(req, res) {
-        res.header('Content-Type', 'text/javascript');
-        res.send('function _bulkr_download(data) { '+
-                'if(data.error == false) { ' +
-                	          'var txtLink = document.getElementById("txtBulkZipLink");' +
-                	          'txtLink.value = txtLink.getAttribute("endpoint") + "/set/" + data.id + ".zip";' +
-                	          'document.getElementById("bulkTip").style.display = "block"; ' +
-                '} else { alert("Error processing bulkr request:\\n "+data.error); } }');
+
+app.configure(function() {
+    app.use(express.methodOverride());
+    app.use(app.router);
+    
+    app.use(express.staticProvider(__dirname + '/public'));
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
-     
      
      
 app.get(/\/set\/?(?:([\d]{13}_[\d\._]+)).zip/, function(req, res) { 
