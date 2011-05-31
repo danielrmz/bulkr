@@ -1,7 +1,8 @@
 var express = require('express');
 var downldr = require('./lib/downloader.js');
 var fs      = require('fs');
-var exec   = require('child_process').exec;
+var exec    = require('child_process').exec;
+var path    = require('path');
 
 var app = express.createServer();
 
@@ -15,8 +16,25 @@ app.get('/channel.js', function(req, res) {
                 '} else { alert("Error processing bulkr request:\\n "+data.error); } }');
 });
      
-app.get('/set/([0-9a-zA-Z_]+)', function(req, res) { 
-	console.log(req);
+app.get('/set/([0-9a-zA-Z_\.]+)', function(req, res) { 
+	path.exists(filePath, function(exists) { 
+		if(exists) {
+			fs.readFile(filePath, function(error, content) {
+				if (error) {
+                    res.writeHead(500);
+                    res.end();
+                }
+                else {
+                    res.writeHead(200, { 'Content-Type': 'application/zip','Content-disposition': 'attachment' });
+                    res.end(content, 'utf-8');
+                }
+	
+			});
+		} else {
+			res.writeHead(404);
+            res.end();
+		}
+	});
 });
 
 app.get('/', function(req, res) {
