@@ -12,15 +12,15 @@ app.get('/channel.js', function(req, res) {
         res.send('function _bulkr_download(data) { '+
                 'if(data.error == false) { ' +
                 	          'var txtLink = document.getElementById("txtBulkZipLink");' +
-                	          'txtLink.value = txtLink.getAttribute("endpoint") + "/set/" + data.id;' +
+                	          'txtLink.value = txtLink.getAttribute("endpoint") + "/set/" + data.id + ".zip";' +
                 	          'document.getElementById("bulkTip").style.display = "block"; ' +
                 '} else { alert("Error processing bulkr request:\\n "+data.error); } }');
 });
      
      
      
-app.get(/\/set\/?(?:([\d]{13}_[\d\._]+))/, function(req, res) { 
-	var file = filePath + req.params[0] + ".zip";
+app.get(/\/set\/?(?:([\d]{13}_[\d\._]+)).zip/, function(req, res) { 
+	var file = filePath + req.params[0];
 	path.exists(file, function(exists) { 
 		if(exists) {
 			fs.readFile(file, function(error, content) {
