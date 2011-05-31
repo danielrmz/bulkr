@@ -5,7 +5,8 @@ var exec    = require('child_process').exec;
 var path    = require('path');
 
 var app = express.createServer();
-
+var filePath = "./files/";
+	
 app.get('/channel.js', function(req, res) {
         res.header('Content-Type', 'text/javascript');
         res.send('function _bulkr_download(data) { '+
@@ -16,10 +17,13 @@ app.get('/channel.js', function(req, res) {
                 '} else { alert("Error processing bulkr request:\\n "+data.error); } }');
 });
      
-app.get('/set/([0-9a-zA-Z_\.]+)', function(req, res) { 
-	path.exists(filePath, function(exists) { 
+     
+     
+app.get(/\/set\/?(?:([\d]{13}_[\d\._]+))/, function(req, res) { 
+	var file = filePath + req.params[0] + ".zip";
+	path.exists(file, function(exists) { 
 		if(exists) {
-			fs.readFile(filePath, function(error, content) {
+			fs.readFile(file, function(error, content) {
 				if (error) {
                     res.writeHead(500);
                     res.end();
@@ -46,7 +50,7 @@ app.get('/', function(req, res) {
         var baseuri = "http://farm1.static.flickr.com/";
         var id        = (parseInt(new Date().getTime())) + "_" + (Math.random() * 1000);
         var savepath  = "/tmp/bulkr/" + id;
-        var zip_savepath = "./files/";
+        var zip_savepath = filePath;
         var completed = 0;
         
         var onComplete = function() {
