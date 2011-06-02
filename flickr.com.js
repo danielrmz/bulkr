@@ -1,11 +1,11 @@
 if(window.jQuery) {
 
-    var service_endpoint = "http://bulkr.danielrmz.com";
+    var service_endpoint = "http://g-srv01.appspot.com/";
     var in_detail_view   = (location + "").indexOf("sets") >= 0;
     
     if(in_detail_view) {
         // Add our js functions for processing the request via jsonp
-        $("body").append("<script type='text/javascript' src='" + service_endpoint + "/channel.js'></script>");
+        $("body").append("<script type='text/javascript' src='" + service_endpoint + "/scripts/channel.js'></script>");
 
         // Add UI Button and checkboxes for Bulk Download selection.
         $(".share-this-wrapper").append("<ul class='share-options-list'>" +
@@ -21,13 +21,13 @@ if(window.jQuery) {
 				'<div class="share-options-inner share-options-placeholder" style="background:white;height:30px;">' +
 				'<input type="text" endpoint="'+service_endpoint+'" onclick="this.select();" id="txtBulkZipLink" readonly="readonly" style="width:92%;height:18px;border:1px solid silver;"/> '+ 
 				' <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="16" height="16" id="clippy" style="margin-top:5px;"> ' +
-'    <param name="movie" value="'+service_endpoint+'/clippy.swf"/>' +
+'    <param name="movie" value="'+service_endpoint+'/images/clippy.swf"/>' +
 '    <param name="allowScriptAccess" value="always" />' +
 '    <param name="quality" value="high" />' +
 '    <param name="scale" value="noscale" />' +
 '    <param name="FlashVars" value="func=_bulk_getLink&label=&feedback=">' +
 '    <param name="bgcolor" value="#FFFFFF">' +
-'    <embed src="'+service_endpoint+'/clippy.swf" scale="noscale" FlashVars="func=_bulk_getLink&label=&feedback=" style="margin-top:5px;position:relative;top:5px;" width="16" height="16" name="clippy" quality="high" allowScriptAccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" bgcolor="#FFFFFF" ' +
+'    <embed src="'+service_endpoint+'/images/clippy.swf" scale="noscale" FlashVars="func=_bulk_getLink&label=&feedback=" style="margin-top:5px;position:relative;top:5px;" width="16" height="16" name="clippy" quality="high" allowScriptAccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" bgcolor="#FFFFFF" ' +
 '    />' +
  
 				'</div>'+
@@ -41,7 +41,7 @@ if(window.jQuery) {
         $(".photo-display-item").each(function() {
             var value = $(this).find("img").attr("src").replace("_s.jpg","").replace(/http:\/\/farm[0-9]+.static.flickr.com\//g,'');
             var chkbx = "<input type='checkbox' value='"+value+"' class='js-chkBulkItem' style='position:absolute;margin-top:-15px;margin-left:4px;' />";
-            var transbx="<div style='height:20px;background:black;margin-top:-20px;width:75px;opacity:0.5;float:left;'></div>";
+            var transbx="<div style='height:69px;background:none;margin-top:-75px;opacity:0.9;width:69px;o;float:left;border: 3px solid #0063DC;-webkit-box-shadow:0px 0px 2px #5A8FD8;'><div style='width:15px;height:15px;float:right;display:block;background:url(http://g-srv01.appspot.com/images/check.png) no-repeat 4px 2px #0063DC'></div></div>";
             $(this).append("<div class='js-divBulk'>" + transbx + chkbx + "</div>");
 	
         });
